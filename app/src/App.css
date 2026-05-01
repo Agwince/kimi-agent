@@ -1,0 +1,76 @@
+/* Lenis smooth scroll styles */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Hide default cursor on desktop */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+/* Show default cursor on touch devices */
+@media (pointer: coarse) {
+  body {
+    cursor: auto !important;
+  }
+  * {
+    cursor: auto !important;
+  }
+}
+
+/* Scroll indicator pulse */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Selection styling */
+::selection {
+  background-color: rgba(255, 165, 2, 0.3);
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background-color: rgba(255, 165, 2, 0.3);
+  color: #ffffff;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f0f0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 165, 2, 0.4);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 165, 2, 0.6);
+}
