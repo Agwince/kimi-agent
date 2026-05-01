@@ -54,7 +54,7 @@ export function createAmberSphere(containerId: string): AmberSphereState {
   camera.position.z = 12;
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(1);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.domElement.style.width = '100%';
   renderer.domElement.style.height = '100%';

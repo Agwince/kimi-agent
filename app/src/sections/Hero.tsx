@@ -1,6 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { createAmberSphere, destroyAmberSphere, type AmberSphereState } from '../lib/AmberSphere';
 
+const isMobile = () =>
+  /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent) ||
+  window.innerWidth < 768;
+
 export default function Hero() {
   const sphereRef = useRef<AmberSphereState | null>(null);
   const initializedRef = useRef(false);
@@ -9,8 +13,10 @@ export default function Hero() {
     if (initializedRef.current) return;
     initializedRef.current = true;
 
-    sphereRef.current = createAmberSphere('hero-canvas-container');
+    // Skip 3D animation on mobile
+    if (isMobile()) return;
 
+    sphereRef.current = createAmberSphere('hero-canvas-container');
     return () => {
       if (sphereRef.current) {
         destroyAmberSphere(sphereRef.current);
@@ -25,7 +31,7 @@ export default function Hero() {
       className="relative w-full overflow-hidden"
       style={{ height: '100vh', backgroundColor: '#1f1e1d' }}
     >
-      {/* Three.js Canvas Container */}
+      {/* Three.js Canvas Container - desktop only */}
       <div
         id="hero-canvas-container"
         data-cursor-expand
@@ -33,7 +39,28 @@ export default function Hero() {
         style={{ zIndex: 0 }}
       />
 
-      {/* Gradient overlays for text readability */}
+      {/* Mobile static background - shows only on mobile */}
+      <div
+        className="absolute inset-0 md:hidden"
+        style={{
+          zIndex: 0,
+          background: 'radial-gradient(ellipse 70% 70% at 80% 40%, rgba(255,165,2,0.15) 0%, rgba(31,30,29,0) 70%)',
+        }}
+      >
+        {/* Amber glow orb for mobile */}
+        <div style={{
+          position: 'absolute',
+          right: '10%',
+          top: '20%',
+          width: 260,
+          height: 260,
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(255,165,2,0.18) 0%, rgba(255,165,2,0.06) 50%, transparent 70%)',
+          filter: 'blur(8px)',
+        }} />
+      </div>
+
+      {/* Gradient overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -86,8 +113,8 @@ export default function Hero() {
               maxWidth: 480,
             }}
           >
-            Mwangi & Associates is a premier Kenyan law firm providing 
-            sophisticated counsel in corporate law, intellectual property, 
+            Mwangi & Associates is a premier Kenyan law firm providing
+            sophisticated counsel in corporate law, intellectual property,
             litigation, and family matters.
           </p>
         </div>
@@ -96,10 +123,7 @@ export default function Hero() {
       {/* Scroll indicator */}
       <div
         className="absolute bottom-8 left-1/2"
-        style={{
-          transform: 'translateX(-50%)',
-          zIndex: 10,
-        }}
+        style={{ transform: 'translateX(-50%)', zIndex: 10 }}
       >
         <div
           className="flex flex-col items-center gap-2 text-legal-silver"
